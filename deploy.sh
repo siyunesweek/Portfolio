@@ -1,17 +1,26 @@
 #!/bin/bash
-# deploy.sh — build y subida a siyuan.es
-# Uso: ./deploy.sh
 
-set -e  # para si hay cualquier error
+set -e  
 
-SERVER="servername"
-REMOTE_PATH="remotepath"
+# 1. Cargar variables desde el archivo .env
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+else
+    echo "Error: Archivo .env no encontrado."
+    exit 1
+fi
+
+if [ -z "$SERVER_NAME" ] || [ -z "$REMOTE_PATH" ]; then
+    echo "Error: SERVER_NAME o REMOTE_PATH no están definidos en el .env"
+    exit 1
+fi
 
 echo "Building..."
 npm run build
 
-echo "Deploying to $SERVER..."
+echo "Deploying to $SERVER_NAME..."
 
-rsync -rvz --chmod=D755,F644 --delete _site/ "$SERVER:$REMOTE_PATH/"
+# 3. Usar las variables en el comando rsync
+rsync -rvz --chmod=D755,F644 --delete _site/ "$SERVER_NAME:$REMOTE_PATH/"
 
 echo "Deployed!"
