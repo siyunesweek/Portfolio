@@ -57,7 +57,7 @@
           {
             "title": "My portfolio",
             "description": "A simple portfolio selfhosted with nginx where you can create posts and have fun dragging bubbles.",
-            "url": "https://github.com/siyunesweek",
+            "url": "https://github.com/siyunesweek/Portfolio",
             "tags": ["JS", "CSS", "html", "Eleventy", "Node"],
             "tagColor": "#c8b8ff",
             "tagBg": "rgba(200,184,255,0.12)",
