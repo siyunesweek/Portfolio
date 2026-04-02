@@ -1,0 +1,324 @@
+---
+title: Blog
+layout: false
+permalink: /posts/
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog · {{ site.name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/harmonyos-sans/css/harmonyos_sans.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/harmonyos-sans/css/harmonyos_sans_sc.css">
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/post.css">
+  <style>
+    body { overflow: auto; background: var(--bg); }
+
+    .posts-page {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+    }
+
+    .posts-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .posts-heading {
+      font-family: 'Harmonyos Sans', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .posts-count {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+    }
+
+    /* Buscador */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    #search-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px 16px 14px 44px;
+      font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    #search-input::placeholder { color: var(--muted); }
+
+    #search-input:focus {
+      border-color: rgba(200,184,255,0.4);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Tags filter */
+    .tags-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .tag-btn {
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(240,237,232,0.6);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+    }
+
+    .tag-btn:hover {
+      background: rgba(255,255,255,0.09);
+      color: var(--text);
+    }
+
+    .tag-btn.active {
+      background: rgba(200,184,255,0.15);
+      border-color: rgba(200,184,255,0.4);
+      color: #c8b8ff;
+    }
+
+    /* Lista de posts */
+    #posts-list { display: flex; flex-direction: column; gap: 0; }
+
+    .post-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0 28px;
+      align-items: start;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.2s;
+    }
+
+    .post-row:hover { padding-left: 6px; }
+    .post-row:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+
+    .post-row-date {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+
+    .post-row-title {
+      font-family: 'Harmonyos Sans', 'HarmonyOS Sans SC', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .post-row-excerpt {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .post-row-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .post-row-tag {
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: rgba(240,237,232,0.5);
+    }
+
+    /* Sin resultados */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 60px 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    @media (max-width: 560px) {
+      .post-row { grid-template-columns: 1fr; gap: 6px 0; }
+      .posts-heading { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="post-header">
+  <a href="/" class="back-link">← inicio</a>
+</header>
+
+<main class="posts-page">
+  <div class="posts-top">
+    <h1 class="posts-heading">Blog</h1>
+    <span class="posts-count" id="posts-count">{{ collections.posts | length }} entradas</span>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar posts..."
+      autocomplete="off"
+      spellcheck="false"
+    >
+  </div>
+
+  {# Recoger todos los tags únicos (excepto "posts") #}
+  {% set allTags = [] %}
+  {% for post in collections.posts %}
+    {% for tag in post.data.tags %}
+      {% if tag != "posts" and tag not in allTags %}
+        {% set allTags = allTags.concat([tag]) %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+  {% if allTags.length > 0 %}
+  <div class="tags-bar" id="tags-bar">
+    <button class="tag-btn active" data-tag="all">todos</button>
+    {% for tag in allTags %}
+      <button class="tag-btn" data-tag="{{ tag }}">{{ tag }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div id="posts-list">
+    {% for post in collections.posts %}
+    <a class="post-row"
+       href="{{ post.url }}"
+       data-title="{{ post.data.title | lower }}"
+       data-excerpt="{{ post.data.excerpt | lower }}"
+       data-tags="{% for tag in post.data.tags %}{{ tag }} {% endfor %}">
+      <div class="post-row-date">{{ post.date | dateReadable }}</div>
+      <div>
+        <div class="post-row-title">{{ post.data.title }}</div>
+        {% if post.data.excerpt %}
+          <div class="post-row-excerpt">{{ post.data.excerpt }}</div>
+        {% endif %}
+        <div class="post-row-tags">
+          {% for tag in post.data.tags %}
+            {% if tag != "posts" %}
+              <span class="post-row-tag">{{ tag }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div id="no-results">No se encontraron posts para esa búsqueda.</div>
+</main>
+
+<script>
+  const input   = document.getElementById('search-input');
+  const list    = document.getElementById('posts-list');
+  const noRes   = document.getElementById('no-results');
+  const counter = document.getElementById('posts-count');
+  const rows    = Array.from(list.querySelectorAll('.post-row'));
+  const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+
+  let activeTag = 'all';
+  let query     = '';
+
+  function filter() {
+    let visible = 0;
+    rows.forEach(row => {
+      const matchesQuery = !query ||
+        row.dataset.title.includes(query) ||
+        row.dataset.excerpt.includes(query) ||
+        row.dataset.tags.includes(query);
+
+      const matchesTag = activeTag === 'all' ||
+        row.dataset.tags.includes(activeTag);
+
+      const show = matchesQuery && matchesTag;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    noRes.style.display   = visible === 0 ? 'block' : 'none';
+    counter.textContent   = visible === 1 ? '1 entrada' : `${visible} entradas`;
+  }
+
+  input.addEventListener('input', () => {
+    query = input.value.trim().toLowerCase();
+    filter();
+  });
+
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tagBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTag = btn.dataset.tag;
+      filter();
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const urlTag = params.get('tag');
+
+    if (urlTag) {
+      // Buscamos el botón que coincida con la etiqueta de la URL
+      const targetBtn = tagBtns.find(btn => btn.dataset.tag === urlTag);
+      
+      if (targetBtn) {
+        // Si el botón existe, simulamos un clic. 
+        // Esto activará tu propio filtro, actualizará el contador y marcará el botón.
+        targetBtn.click();
+      } else {
+        // Fallback por si acaso: filtramos directamente aunque no haya botón visible
+        activeTag = urlTag;
+        filter();
+      }
+    }
+  });
+</script>
+</body>
+</html>

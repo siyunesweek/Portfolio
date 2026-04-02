@@ -1,0 +1,117 @@
+[
+  {
+    "id": "about",
+    "label": "About me",
+    "emoji": "ʕ•́ᴥ•̀ʔっ",
+    "color": "#c8b8ff",
+    "glow": "rgba(200,184,255,0.35)",
+    "radius": 90,
+    "sections": [
+      {
+        "title": "",
+        "type": "text",
+        "content": "Hi I am Siyuan. I am just a normal person with a normal life."
+      },
+      {
+        "title": "Interests",
+        "type": "pills",
+        "items": ["Phones", "Repostería", "Self-hosting", "Open source", "Photography"]
+      },
+      {
+        "title": "Languages",
+        "type": "pills",
+        "items": ["Chinese", "Spanish", "Galician", "English", "German"]
+      },
+ {
+        "title": "Used Technologies",
+        "type": "pills",
+        "items": [
+          { "name": "C", "url": "https://www.learn-c.org/es/" },
+          { "name": "C++", "url": "https://isocpp.org/" },
+          { "name": "C#", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/" },
+          { "name": ".NET", "url": "https://dotnet.microsoft.com/" },
+          { "name": "Java", "url": "https://www.java.com/" },
+          { "name": "React", "url": "https://react.dev/" },
+          { "name": "Spring Boot", "url": "https://spring.io/projects/spring-boot" },
+          { "name": "Selenium", "url": "https://www.selenium.dev/" },
+          { "name": "MySQL", "url": "https://www.mysql.com/" },
+          { "name": "Linux", "url": "https://www.kernel.org/" },
+          { "name": "Jellyfin", "url": "https://jellyfin.org/" },
+          "HTML · CSS · JS" 
+        ]
+      }
+    ]
+  },
+  {
+    "id": "projects",
+    "label": "Projects",
+    "emoji": "</>",
+    "color": "#ff9f7a",
+    "glow": "rgba(255,159,122,0.35)",
+    "radius": 100,
+    "sections": [
+      {
+        "title": "Mis proyectos",
+        "type": "projects",
+        "items": [
+          {
+            "title": "My portfolio",
+            "description": "A simple portfolio selfhosted with nginx where you can create posts and have fun dragging bubbles.",
+            "url": "https://github.com/siyunesweek",
+            "tags": ["JS", "CSS", "html", "Eleventy", "Node"],
+            "tagColor": "#c8b8ff",
+            "tagBg": "rgba(200,184,255,0.12)",
+            "tagBorder": "rgba(200,184,255,0.25)"
+          },
+          {
+            "title": "Metronome",
+            "description": "Translation to chinese and spanish of an open source metronome app",
+            "url": "https://github.com/siyunesweek/Metronome",
+            "tags": ["Translation", "Kotlin"],
+            "tagColor": "#ff9f7a",
+            "tagBg": "rgba(255,159,122,0.12)",
+            "tagBorder": "rgba(255,159,122,0.25)"
+          },
+          {
+            "title": "farmaciasSL",
+            "description": "An porcess model in BonitaBPM with a java spring boot backend",
+            "url": "https://github.com/siyunesweek/farmaciasSL",
+            "tags": ["BonitaBPM", "Java", "Spring boot"],
+            "tagColor": "#ff9f7a",
+            "tagBg": "rgba(255,159,122,0.12)",
+            "tagBorder": "rgba(255,159,122,0.25)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "blog",
+    "label": "Blog",
+    "emoji": "✎﹏",
+    "color": "#7aefd4",
+    "glow": "rgba(122,239,212,0.35)",
+    "radius": 80,
+    "type": "blog"
+  },
+  {
+    "id": "博客",
+    "label": "博客",
+    "emoji": "( ˘꒳˘)",
+    "color": "#7aefd4",
+    "glow": "rgba(123,239,212,0.35)",
+    "radius": 89,
+    "type": "blog",
+    "filterTag": "中文"
+  },
+  {
+    "id": "Recipes",
+    "label": "Recipes",
+    "emoji": "( ˘▽˘)っ♨",
+    "color": "#7aefd4",
+    "glow": "rgba(123,239,212,0.35)",
+    "radius": 77,
+    "type": "blog",
+    "filterTag": "Recipe"
+  }
+]

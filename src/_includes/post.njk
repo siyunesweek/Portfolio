@@ -1,0 +1,38 @@
+{% extends "base.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/css/panel.css">
+  <link rel="stylesheet" href="/public/css/post.css">
+{% endblock %}
+
+{% block content %}
+<header class="post-header">
+  <a href="javascript:history.back()" class="back-link">← volver</a>
+</header>
+
+<main class="post-main">
+  <article class="post-article">
+    <div class="post-meta">
+      <time datetime="{{ page.date | dateISO }}">{{ page.date | dateReadable }}</time>
+      {% if tags %}
+        <span class="post-meta-sep">·</span>
+        {% for tag in tags %}
+          {% if tag != "posts" %}
+            <span class="post-tag">{{ tag }}</span>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <h1 class="post-title">{{ title }}</h1>
+
+    {% if excerpt %}
+      <p class="post-excerpt">{{ excerpt }}</p>
+    {% endif %}
+
+    <div class="post-body">
+      {{ content | safe }}
+    </div>
+  </article>
+</main>
+{% endblock %}

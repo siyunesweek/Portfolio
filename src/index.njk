@@ -1,0 +1,58 @@
+{% extends "base.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/css/panel.css">
+{% endblock %}
+
+{% block content %}
+
+<canvas id="bgCanvas"></canvas>
+<div id="scene"></div>
+
+<div id="header-name">{{ site.name }}</div>
+<div id="header-sub">{{ site.domain }}</div>
+<div id="hint">Have fun</div>
+
+<div id="expander"></div>
+
+<div id="panel-wrap">
+  <div id="panel">
+    <button id="close-btn">✕</button>
+    <div id="panel-header">
+      <div id="panel-icon"></div>
+      <div>
+        <div id="panel-title"></div>
+        <div id="panel-accent-bar"></div>
+      </div>
+    </div>
+    <div id="panel-content"></div>
+  </div>
+</div>
+
+{# Inyectamos los datos de burbujas y posts como JSON en la página #}
+<script>
+  window.BUBBLES_DATA = {{ bubbles | dump | safe }};
+  window.POSTS_DATA = [
+    {% for post in collections.posts %}
+    {
+      "title": {{ post.data.title | dump | safe }},
+      "excerpt": {{ post.data.excerpt | dump | safe }},
+      "date": {{ post.date | dateISO | dump | safe }},
+      "url": {{ post.url | dump | safe }},
+      "tags": {{ post.data.tags | dump | safe }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ];
+  window.SITE_DATA = {
+    "email": {{ site.email | dump | safe }},
+    "github": {{ site.github | dump | safe }},
+    "linkedin": {{ site.linkedin | dump | safe }}
+  };
+</script>
+
+<script src="/public/js/physics.js"></script>
+<script src="/public/js/panel.js"></script>
+<script src="/public/js/bubbles.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+
+{% endblock %}

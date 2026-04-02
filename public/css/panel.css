@@ -1,0 +1,249 @@
+/* ── Expander (hero de transición) ── */
+#expander {
+  position: fixed;
+  top: 0; left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 200;
+  display: none;
+}
+
+/* ── Panel wrap ── */
+#panel-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 201;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+#panel-wrap.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Panel ── */
+#panel {
+  position: relative;
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 48px 52px;
+  max-width: 680px;
+  width: calc(100vw - 48px);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+#panel-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+#panel-icon { font-size: 32px; line-height: 1; }
+
+#panel-title {
+  font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+#panel-accent-bar {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+#close-btn {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#close-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--text);
+}
+
+/* ── Contenido del panel ── */
+#panel-content {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(240, 237, 232, 0.82);
+}
+
+#panel-content h3 {
+  font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 28px 0 12px;
+}
+
+#panel-content h3:first-child { margin-top: 0; }
+
+#panel-content a { color: #c8b8ff; text-decoration: none; }
+#panel-content a:hover { text-decoration: underline; }
+
+/* ── Proyectos ── */
+.project-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  transition: background 0.2s;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card.is-clickable:hover {
+  background: var(--glass-bg-hover);
+  cursor: pointer;
+  transform: translateY(-2px); /* Un levísimo salto hacia arriba para dar feedback */
+  transition: background 0.2s, transform 0.2s;
+}
+
+.project-card-title {
+  font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.project-card-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.project-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  margin-right: 6px;
+  margin-top: 8px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* ── Blog (lista en panel) ── */
+.blog-post {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 18px 0;
+  cursor: pointer;
+  transition: padding-left 0.2s;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.blog-post:hover { padding-left: 8px; }
+.blog-post:last-child { border-bottom: none; }
+
+.blog-date {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
+}
+
+.blog-title {
+  font-family: 'HarmonyOS Sans', 'HarmonyOS Sans SC', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.blog-excerpt {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Skills / pills ── */
+.skill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.skill-pill {
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(240, 237, 232, 0.75);
+}
+
+a.skill-pill.is-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+
+a.skill-pill.is-link:hover {
+  background: var(--glass-bg-hover);
+  color: #c8b8ff; /* Le damos un toque lila al pasar el ratón */
+  transform: translateY(-2px); /* Pequeño salto hacia arriba */
+}
+
+@media (max-width: 600px) {
+  #panel { padding: 36px 28px; }
+  #panel-title { font-size: 22px; }
+}
+
+/* Para navegadores basados en WebKit (Chrome, Edge, Safari) */
+#panel::-webkit-scrollbar {
+  width: 14px; /* Ancho total del área de la barra */
+}
+
+#panel::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 20px 0; /* Da un poco de aire arriba y abajo para que no choque con tus bordes curvos */
+}
+
+#panel::-webkit-scrollbar-thumb {
+  background-color: var(--muted);
+  border-radius: 10px;
+  /* Este borde transparente es un truco maestro: hace que la barra parezca más fina 
+     y crea un "margen" interno entre la barra y el borde del panel */
+  border: 4px solid var(--panel-bg); 
+  opacity: 0.5;
+}
+
+#panel::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text); /* Se ilumina al pasar el ratón */
+}
+
+/* Para Firefox (usa un estándar diferente, más limitado pero efectivo) */
+#panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) transparent;
+}
