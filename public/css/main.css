@@ -51,7 +51,8 @@ canvas {
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .bubble-label {

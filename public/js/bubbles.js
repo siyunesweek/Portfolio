@@ -37,7 +37,7 @@ function makeBubble(sectionData, i) {
   el.className = 'bubble-el';
   el.style.width = el.style.height = (r * 2) + 'px';
   el.style.background = `radial-gradient(circle at 38% 35%, ${sectionData.color}55 0%, ${sectionData.color}22 55%, ${sectionData.color}08 100%)`;
-  el.style.boxShadow = `0 0 0 1.5px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
+  el.style.boxShadow = `0 0 0 2px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
   el.style.cursor = 'grab';
 
   const emoji = document.createElement('div');
@@ -67,7 +67,7 @@ function makeBubble(sectionData, i) {
     startX = e.clientX; startY = e.clientY;
     b.hist = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
     el.style.cursor = 'grabbing';
-    el.style.boxShadow = `0 0 0 2.5px ${sectionData.color}90, 0 0 70px ${sectionData.glow}, inset 0 0 40px ${sectionData.color}25`;
+    el.style.boxShadow = `0 0 0 3px ${sectionData.color}90, 0 0 70px ${sectionData.glow}, inset 0 0 40px ${sectionData.color}25`;
     el.style.filter = 'brightness(1.18)';
   });
 
@@ -80,14 +80,14 @@ function makeBubble(sectionData, i) {
     if (Math.hypot(e.clientX - startX, e.clientY - startY) > 6) moved = true;
     b.x = Math.max(b.r, Math.min(W() - b.r, e.clientX));
     b.y = Math.max(b.r, Math.min(H() - b.r, e.clientY));
-    b.el.style.transform = `translate(${b.x - b.r}px,${b.y - b.r}px)`;
+    b.el.style.transform = `translate3d(${b.x - b.r}px,${b.y - b.r}px,0) scale(1.0001)`;
   });
 
   el.addEventListener('pointerup', () => {
     if (!b.dragging) return;
     b.dragging = false;
     el.style.cursor = 'grab';
-    el.style.boxShadow = `0 0 0 1.5px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
+    el.style.boxShadow = `0 0 0 2px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
     el.style.filter = '';
 
     if (!moved) { openPanel(b); return; }
@@ -112,7 +112,7 @@ function makeBubble(sectionData, i) {
   el.addEventListener('pointercancel', () => {
     b.dragging = false;
     el.style.cursor = 'grab';
-    el.style.boxShadow = `0 0 0 1.5px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
+    el.style.boxShadow = `0 0 0 2px ${sectionData.color}40, 0 0 40px ${sectionData.glow}, inset 0 0 30px ${sectionData.color}15`;
     el.style.filter = '';
     b.hist = [];
   });
@@ -130,7 +130,7 @@ function initBubbles() {
 
 initBg();
 initBubbles();
-tick();
+requestAnimationFrame(tick);
 
 window.addEventListener('resize', () => {
   initBg();

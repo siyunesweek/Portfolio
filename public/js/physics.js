@@ -50,37 +50,37 @@ function resolveCollision(a, b) {
   if (!b.dragging) { b.vx += imp * nx; b.vy += imp * ny; }
 }
 
-/* ── Fricción proporcional a la velocidad ── */
-function applyFriction(b) {
-  const spd = Math.hypot(b.vx, b.vy);
-  const friction = spd > 8 ? 0.980 : spd > 4 ? 0.990 : 0.996;
-  b.vx *= friction;
-  b.vy *= friction;
-  // velocidad mínima para que nunca se queden quietas
-  if (spd < 0.10) {
-    const a = Math.random() * Math.PI * 2;
-    b.vx = Math.cos(a) * 0.10;
-    b.vy = Math.sin(a) * 0.10;
-  }
-}
+/* ── Loop principal de física (delta-time) ── */
+let lastT = 0;
 
-/* ── Loop principal de física ── */
-function tick() {
-  if (window.panelOpen) { requestAnimationFrame(tick); return; }
+function tick(now) {
+  if (!lastT) { lastT = now; requestAnimationFrame(tick); return; }
+
+  if (window.panelOpen) { lastT = now; requestAnimationFrame(tick); return; }
+
+  // dt normalizado: 1.0 = 16.67ms (60fps). Capeado para evitar saltos enormes.
+  const dt = Math.min((now - lastT) / 16.667, 3);
+  lastT = now;
 
   const w = W(), h = H();
 
   for (const b of window.bubbles) {
     if (b.dragging) continue;
-    b.x += b.vx; b.y += b.vy;
+
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
 
     // rebote en bordes
-    if (b.x - b.r < 0)  { b.x = b.r;   b.vx =  Math.abs(b.vx); }
-    if (b.x + b.r > w)  { b.x = w - b.r; b.vx = -Math.abs(b.vx); }
-    if (b.y - b.r < 0)  { b.y = b.r;   b.vy =  Math.abs(b.vy); }
-    if (b.y + b.r > h)  { b.y = h - b.r; b.vy = -Math.abs(b.vy); }
+    if (b.x - b.r < 0)  { b.x = b.r;     b.vx =  Math.abs(b.vx); }
+    if (b.x + b.r > w)  { b.x = w - b.r;  b.vx = -Math.abs(b.vx); }
+    if (b.y - b.r < 0)  { b.y = b.r;     b.vy =  Math.abs(b.vy); }
+    if (b.y + b.r > h)  { b.y = h - b.r;  b.vy = -Math.abs(b.vy); }
 
-    applyFriction(b);
+    // fricción (escalada por dt para consistencia)
+    const spd = Math.hypot(b.vx, b.vy);
+    const friction = Math.pow(spd > 8 ? 0.985 : spd > 3 ? 0.992 : 0.997, dt);
+    b.vx *= friction;
+    b.vy *= friction;
   }
 
   // colisiones entre pares
@@ -88,9 +88,18 @@ function tick() {
     for (let j = i + 1; j < window.bubbles.length; j++)
       resolveCollision(window.bubbles[i], window.bubbles[j]);
 
+  // dead-zone después de colisiones
+  for (const b of window.bubbles) {
+    if (b.dragging) continue;
+    if (Math.abs(b.vx) < 0.05 && Math.abs(b.vy) < 0.05) {
+      b.vx = 0;
+      b.vy = 0;
+    }
+  }
+
   // actualizar posición DOM
   for (const b of window.bubbles)
-    b.el.style.transform = `translate(${b.x - b.r}px,${b.y - b.r}px)`;
+    b.el.style.transform = `translate3d(${b.x - b.r}px,${b.y - b.r}px,0) scale(1.0001)`;
 
   requestAnimationFrame(tick);
 }
