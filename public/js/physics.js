@@ -5,6 +5,35 @@
 const W = () => window.innerWidth;
 const H = () => window.innerHeight;
 
+window.activeWaves = [];
+
+function createDrop(x, y, excludedBubble = null) {
+  const maxHitRadius = 2000;
+  const expansionDurationMs = 4000;
+  const speed = maxHitRadius / expansionDurationMs;
+
+  const wave = {
+    x, y,
+    startTime: performance.now(),
+    speed,
+    maxRadius: maxHitRadius,
+    strength: 1500, // Fuerza base ajustada empíricamente
+    hitBubbles: new Set(excludedBubble ? [excludedBubble] : [])
+  };
+  window.activeWaves.push(wave);
+
+  // Visual element
+  const el = document.createElement('div');
+  el.className = 'wave-ring';
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  
+  document.getElementById('scene').appendChild(el);
+  
+  // Cleanup DOM
+  setTimeout(() => el.remove(), expansionDurationMs + 100);
+}
+
 /* ── Background estático de partículas ── */
 function initBg() {
   const canvas = document.getElementById('bgCanvas');
@@ -63,6 +92,37 @@ function tick(now) {
   lastT = now;
 
   const w = W(), h = H();
+
+  // process waves
+  for (let i = window.activeWaves.length - 1; i >= 0; i--) {
+    const wWave = window.activeWaves[i];
+    const currentRadius = (now - wWave.startTime) * wWave.speed;
+
+    if (currentRadius > wWave.maxRadius) {
+      window.activeWaves.splice(i, 1);
+      continue;
+    }
+
+    for (const b of window.bubbles) {
+      if (b.dragging || wWave.hitBubbles.has(b)) continue;
+
+      const dx = b.x - wWave.x;
+      const dy = b.y - wWave.y;
+      const dist = Math.hypot(dx, dy);
+
+      // Si la onda ya "tocó" el borde de la burbuja
+      if (currentRadius >= dist - b.r) {
+        wWave.hitBubbles.add(b);
+        const effDist = Math.max(dist, 60); 
+        const pushForce = wWave.strength / effDist;
+        const nx = dist > 0.1 ? dx / dist : (Math.random() - 0.5);
+        const ny = dist > 0.1 ? dy / dist : (Math.random() - 0.5);
+        
+        b.vx += nx * pushForce;
+        b.vy += ny * pushForce;
+      }
+    }
+  }
 
   for (const b of window.bubbles) {
     if (b.dragging) continue;

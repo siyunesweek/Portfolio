@@ -15,29 +15,74 @@
       {
         "title": "Interests",
         "type": "pills",
-        "items": ["Phones", "Repostería", "Self-hosting", "Open source", "Photography"]
+        "items": [
+          "Phones",
+          "Baking",
+          "Self-hosting",
+          "Open source",
+          "Photography"
+        ]
       },
       {
         "title": "Languages",
         "type": "pills",
-        "items": ["Chinese", "Spanish", "Galician", "English", "German"]
+        "items": [
+          "Chinese",
+          "Spanish",
+          "Galician",
+          "English",
+          "German"
+        ]
       },
- {
+      {
         "title": "Used Technologies",
         "type": "pills",
         "items": [
-          { "name": "C", "url": "https://www.learn-c.org/es/" },
-          { "name": "C++", "url": "https://isocpp.org/" },
-          { "name": "C#", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/" },
-          { "name": ".NET", "url": "https://dotnet.microsoft.com/" },
-          { "name": "Java", "url": "https://www.java.com/" },
-          { "name": "React", "url": "https://react.dev/" },
-          { "name": "Spring Boot", "url": "https://spring.io/projects/spring-boot" },
-          { "name": "Selenium", "url": "https://www.selenium.dev/" },
-          { "name": "MySQL", "url": "https://www.mysql.com/" },
-          { "name": "Linux", "url": "https://www.kernel.org/" },
-          { "name": "Jellyfin", "url": "https://jellyfin.org/" },
-          "HTML · CSS · JS" 
+          {
+            "name": "C",
+            "url": "https://www.learn-c.org/es/"
+          },
+          {
+            "name": "C++",
+            "url": "https://isocpp.org/"
+          },
+          {
+            "name": "C#",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/"
+          },
+          {
+            "name": ".NET",
+            "url": "https://dotnet.microsoft.com/"
+          },
+          {
+            "name": "Java",
+            "url": "https://www.java.com/"
+          },
+          {
+            "name": "React",
+            "url": "https://react.dev/"
+          },
+          {
+            "name": "Spring Boot",
+            "url": "https://spring.io/projects/spring-boot"
+          },
+          {
+            "name": "Selenium",
+            "url": "https://www.selenium.dev/"
+          },
+          {
+            "name": "MySQL",
+            "url": "https://www.mysql.com/"
+          },
+          {
+            "name": "Linux",
+            "url": "https://www.kernel.org/"
+          },
+          {
+            "name": "Nginx",
+            "url": "https://nginx.org/"
+          },
+          "HTML · CSS · JS"
         ]
       }
     ]
@@ -58,7 +103,13 @@
             "title": "My portfolio",
             "description": "A simple portfolio selfhosted with nginx where you can create posts and have fun dragging bubbles.",
             "url": "https://github.com/siyunesweek/Portfolio",
-            "tags": ["JS", "CSS", "html", "Eleventy", "Node"],
+            "tags": [
+              "JS",
+              "CSS",
+              "html",
+              "Eleventy",
+              "Node"
+            ],
             "tagColor": "#c8b8ff",
             "tagBg": "rgba(200,184,255,0.12)",
             "tagBorder": "rgba(200,184,255,0.25)"
@@ -67,7 +118,10 @@
             "title": "Metronome",
             "description": "Translation to chinese and spanish of an open source metronome app",
             "url": "https://github.com/siyunesweek/Metronome",
-            "tags": ["Translation", "Kotlin"],
+            "tags": [
+              "Translation",
+              "Kotlin"
+            ],
             "tagColor": "#ff9f7a",
             "tagBg": "rgba(255,159,122,0.12)",
             "tagBorder": "rgba(255,159,122,0.25)"
@@ -76,7 +130,11 @@
             "title": "farmaciasSL",
             "description": "An porcess model in BonitaBPM with a java spring boot backend",
             "url": "https://github.com/siyunesweek/farmaciasSL",
-            "tags": ["BonitaBPM", "Java", "Spring boot"],
+            "tags": [
+              "BonitaBPM",
+              "Java",
+              "Spring boot"
+            ],
             "tagColor": "#ff9f7a",
             "tagBg": "rgba(255,159,122,0.12)",
             "tagBorder": "rgba(255,159,122,0.25)"

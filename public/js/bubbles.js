@@ -69,6 +69,9 @@ function makeBubble(sectionData, i) {
     el.style.cursor = 'grabbing';
     el.style.boxShadow = `0 0 0 3px ${sectionData.color}90, 0 0 70px ${sectionData.glow}, inset 0 0 40px ${sectionData.color}25`;
     el.style.filter = 'brightness(1.18)';
+    
+    // Generar onda ignorando esta misma burbuja
+    if (window.createDrop) window.createDrop(e.clientX, e.clientY, b);
   });
 
   el.addEventListener('pointermove', e => {
@@ -138,4 +141,65 @@ window.addEventListener('resize', () => {
     b.x = Math.max(b.r + 10, Math.min(W() - b.r - 10, b.x));
     b.y = Math.max(b.r + 10, Math.min(H() - b.r - 10, b.y));
   });
+});
+
+// Listener para el fondo (clicks en espacio vacío)
+document.getElementById('bgCanvas').addEventListener('pointerdown', (e) => {
+  if (window.panelOpen) return;
+  if (window.createDrop) window.createDrop(e.clientX, e.clientY);
+  requestDeviceMotionPermission();
+});
+document.getElementById('scene').addEventListener('pointerdown', (e) => {
+  if (window.panelOpen) return;
+  if (e.target.id === 'scene') {
+    if (window.createDrop) window.createDrop(e.clientX, e.clientY);
+  }
+  requestDeviceMotionPermission();
+});
+
+/* ── Shake / DeviceMotion ── */
+let lastShakeTime = 0;
+let lastAcc = { x: null, y: null, z: null };
+const SHAKE_THRESHOLD = 15;
+let motionPermissionGranted = false;
+
+function requestDeviceMotionPermission() {
+  if (motionPermissionGranted) return;
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission()
+      .then(response => {
+        if (response == 'granted') {
+          motionPermissionGranted = true;
+        }
+      })
+      .catch(console.error);
+  } else {
+    motionPermissionGranted = true;
+  }
+}
+
+window.addEventListener('devicemotion', (e) => {
+  const acc = e.accelerationIncludingGravity;
+  if (!acc || acc.x === null) return;
+  
+  if (lastAcc.x !== null) {
+    const deltaX = Math.abs(acc.x - lastAcc.x);
+    const deltaY = Math.abs(acc.y - lastAcc.y);
+    const deltaZ = Math.abs(acc.z - lastAcc.z);
+    
+    if (deltaX + deltaY + deltaZ > SHAKE_THRESHOLD) {
+      const now = performance.now();
+      if (now - lastShakeTime > 200) {
+        lastShakeTime = now;
+        window.bubbles.forEach(b => {
+          if (!b.dragging) {
+            // Repartir una velocidad explosiva aleatoria
+            b.vx += (Math.random() - 0.5) * 40;
+            b.vy += (Math.random() - 0.5) * 40;
+          }
+        });
+      }
+    }
+  }
+  lastAcc = { x: acc.x, y: acc.y, z: acc.z };
 });

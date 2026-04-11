@@ -109,3 +109,23 @@ canvas {
 @media (max-width: 600px) {
   #header-name { font-size: 18px; }
 }
+
+/* ── Efecto Gota/Onda ── */
+.wave-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(122, 239, 212, 0.4);
+  box-shadow: 0 0 2px rgba(122, 239, 212, 0.3), inset 0 0 2px rgba(122, 239, 212, 0.2);
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  transform: translate3d(-50%, -50%, 0) scale(0);
+  animation: waveExpand 4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+@keyframes waveExpand {
+  0% { transform: translate3d(-50%, -50%, 0) scale(0); opacity: 1; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(40); opacity: 0; }
+}
