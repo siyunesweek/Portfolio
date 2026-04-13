@@ -7,7 +7,7 @@ tags:
 layout: post.njk
 ---
 
-Today I am sharing an incredible recipe to make Lemon Cake Pops entirely from scratch. We are going to bake a fluffy lemon sponge cake, prepare a smooth buttercream, and cover everything in a crisp chocolate shell. Let's get to it!
+Today I am sharing an incredible recipe to make Lemon Cake Pops entirely from scratch. We are going to bake a fluffy lemon sponge cake, prepare a smooth buttercream, and cover everything in a crisp chocolate shell. I made this recipe for the spring dessert competition at my work.
 
 ## Part 1: Lemon Sponge Cake Base
 
