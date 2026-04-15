@@ -147,9 +147,9 @@
     "id": "blog",
     "label": "Blog",
     "emoji": "✎﹏",
-    "color": "#7aefd4",
+    "color": "#9c0000",
     "glow": "rgba(122,239,212,0.35)",
-    "radius": 80,
+    "radius": 120,
     "type": "blog"
   },
   {
@@ -158,7 +158,7 @@
     "emoji": "( ˘꒳˘)",
     "color": "#7aefd4",
     "glow": "rgba(123,239,212,0.35)",
-    "radius": 89,
+    "radius": 90,
     "type": "blog",
     "filterTag": "中文"
   },
@@ -166,7 +166,7 @@
     "id": "Recipes",
     "label": "Recipes",
     "emoji": "( ˘▽˘)っ♨",
-    "color": "#7aefd4",
+    "color": "#fdbc00",
     "glow": "rgba(123,239,212,0.35)",
     "radius": 77,
     "type": "blog",

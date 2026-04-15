@@ -104,7 +104,7 @@ function renderBubbleContent(bubble) {
     html += `
       <br>
       <h3>Contact</h3>
-      <p>Wanna talk about something? Feel free to contact me through any social media, I always willing to discuss about phones😎</p><br>
+      <p>Wanna talk about something? Feel free to contact me through any social media, I am always willing to discuss about phones😎</p><br>
       <p>📧 <a href="mailto:${site.email}">${site.email}</a></p>
       
       <h3>SM</h3>
@@ -163,20 +163,9 @@ function openPanel(bubble) {
   }));
 
   setTimeout(() => {
-    // 1. Mostramos el panel (esto ya lo hacías)
     panelWrap.classList.add('visible');
-
-    // ¡LA MADRE DE TODAS LAS EXPLOSIONES DE CONFETI!
-    confetti({
-      particleCount: 350,         // Pasamos de 120 a 350 papelitos
-      spread: 130,                // Una explosión mucho más ancha (casi cubre toda la pantalla)
-      startVelocity: 70,          // Sale disparado con más fuerza hacia arriba
-      origin: { y: 0.55 },        // Lo subimos un pelín para que caiga desde más alto
-      colors: [bubble.color, '#ffffff', '#c8b8ff', '#7aefd4', '#f7c45e'], // ¡Todos los colores de tu web!
-      disableForReducedMotion: true
-    });
-  
   }, 440);
+
 }
 
 /* ── Cierra el panel con transición de vuelta a la burbuja ── */
@@ -208,7 +197,18 @@ function closePanel() {
       setTimeout(() => bubble.el.style.transition = '', 220);
       window.panelOpen = false;
       window.activeBubble = null;
+
+      // Confetti al salir de la burbuja
+      confetti({
+        particleCount: 350,
+        spread: 130,
+        startVelocity: 70,
+        origin: { y: 0.55 },
+        colors: [s.color, '#ffffff', '#c8b8ff', '#7aefd4', '#f7c45e'],
+        disableForReducedMotion: true
+      });
     }, 520);
+
   }, 230);
 }
 

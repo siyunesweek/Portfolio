@@ -14,8 +14,18 @@ const POSITIONS = [
   [0.18, 0.70],
 ];
 
+/* ── Escala el radio de las burbujas según el ancho de pantalla ── */
+function getRadiusScale() {
+  const w = W();
+  if (w <= 360)  return 0.50;  // móvil pequeño  (≤360px)
+  if (w <= 480)  return 0.58;  // móvil normal   (≤480px)
+  if (w <= 768)  return 0.70;  // tablet pequeña (≤768px)
+  if (w <= 1024) return 0.85;  // tablet grande  (≤1024px)
+  return 1.0;                  // escritorio     (>1024px)
+}
+
 function makeBubble(sectionData, i) {
-  const r = sectionData.radius;
+  const r = Math.round(sectionData.radius * getRadiusScale());
   const [px, py] = POSITIONS[i] || [Math.random(), Math.random()];
 
   const b = {
@@ -66,12 +76,11 @@ function makeBubble(sectionData, i) {
     b.vx = 0; b.vy = 0;
     startX = e.clientX; startY = e.clientY;
     b.hist = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
+    b._prevDragX = e.clientX;
+    b._prevDragY = e.clientY;
     el.style.cursor = 'grabbing';
     el.style.boxShadow = `0 0 0 3px ${sectionData.color}90, 0 0 70px ${sectionData.glow}, inset 0 0 40px ${sectionData.color}25`;
     el.style.filter = 'brightness(1.18)';
-    
-    // Generar onda ignorando esta misma burbuja
-    if (window.createDrop) window.createDrop(e.clientX, e.clientY, b);
   });
 
   el.addEventListener('pointermove', e => {
@@ -81,9 +90,40 @@ function makeBubble(sectionData, i) {
     b.hist.push({ x: e.clientX, y: e.clientY, t: now });
     while (b.hist.length > 1 && now - b.hist[0].t > VEL_MS) b.hist.shift();
     if (Math.hypot(e.clientX - startX, e.clientY - startY) > 6) moved = true;
+
+    const prevX = b._prevDragX ?? b.x;
+    const prevY = b._prevDragY ?? b.y;
     b.x = Math.max(b.r, Math.min(W() - b.r, e.clientX));
     b.y = Math.max(b.r, Math.min(H() - b.r, e.clientY));
     b.el.style.transform = `translate3d(${b.x - b.r}px,${b.y - b.r}px,0) scale(1.0001)`;
+
+    // Velocidad instantánea del arrastre
+    const dragVx = b.x - prevX;
+    const dragVy = b.y - prevY;
+    b._prevDragX = b.x;
+    b._prevDragY = b.y;
+
+    // Colisión de empuje con el resto de burbujas
+    for (const other of window.bubbles) {
+      if (other === b || other.dragging) continue;
+      const dx = other.x - b.x;
+      const dy = other.y - b.y;
+      const dist = Math.hypot(dx, dy);
+      const minDist = b.r + other.r + 2;
+      if (dist < minDist && dist > 0.01) {
+        // Separar superposición
+        const nx = dx / dist, ny = dy / dist;
+        const overlap = minDist - dist;
+        other.x += nx * overlap;
+        other.y += ny * overlap;
+        // Transferir velocidad proporcional al impacto
+        const impact = (dragVx * nx + dragVy * ny);
+        if (impact > 0) {
+          other.vx += nx * impact * 1.4;
+          other.vy += ny * impact * 1.4;
+        }
+      }
+    }
   });
 
   el.addEventListener('pointerup', () => {
@@ -132,6 +172,7 @@ function initBubbles() {
 }
 
 initBg();
+initWaveCanvas();
 initBubbles();
 requestAnimationFrame(tick);
 

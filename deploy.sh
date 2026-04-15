@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  
+set -e  # Detener si hay errores
 
 # 1. Cargar variables desde el archivo .env
 if [ -f .env ]; then
@@ -16,7 +16,7 @@ if [ -z "$SERVER_NAME" ] || [ -z "$REMOTE_PATH" ]; then
 fi
 
 echo "Building..."
-npm run build
+bun run build
 
 echo "Deploying to $SERVER_NAME..."
 
