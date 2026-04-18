@@ -8,7 +8,7 @@ This portfolio site is a static site directly generated from data and templates.
 
 - **[Eleventy (11ty)](https://www.11ty.dev/)** - A static site generator.
 - **HTML, CSS, Vanilla JS** - For the structure, styling, and custom interactive UI (such as the physics of the draggable bubbles).
-- **Node.js** - Package and build management.
+- **Bun** - Package and build management.
 
 ---
 
@@ -30,19 +30,19 @@ Make sure you have [Node.js](https://nodejs.org/) with npm installed.
    ```
 3. Install the necessary dependencies:
    ```bash
-   npm install
+   bun install
    ```
 
 ### Running Locally
 To start the local development server (which includes live-reloading as you make changes), run:
 ```bash
-npm run dev
+bun run dev
 ```
 
 ### Build for Production
 To generate the static HTML files (they will be placed inside the `_site` directory):
 ```bash
-npm run build
+bun run build
 ```
 
 > There is a deploy.sh that automate the process of build and deploying.
@@ -53,7 +53,7 @@ npm run build
 ## Project Structure Highlights
 - `/data` - JSON configurations storing information about the site and the interactive bubbles (`site.json`, `bubbles.json`).
 - `/public` - Static assets including CSS styles and the vanilla JS (`bubbles.js`) powering the core physics/animations.
-- `package.json` - Node scripts (`npm run dev`, `npm run build`) and Eleventy dependencies.
+- `package.json` - Bun scripts (`bun run dev`, `bun run build`) and Eleventy dependencies.
 - `deploy.sh` - Shell script used for my specific server deployments.
 - `physics.js` - where all the physics releated to the bubbles are located
 
